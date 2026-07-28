@@ -10,19 +10,17 @@ from sqlalchemy.orm import DeclarativeBase
 from app.core.config import settings
 
 
-# Базовый класс для всех моделей
 class Base(DeclarativeBase):
     pass
 
 
-# Создаем подключение к PostgreSQL
 engine = create_async_engine(
     settings.database_url,
     echo=settings.debug,
+    pool_pre_ping=True,
 )
 
 
-# Фабрика асинхронных сессий
 SessionLocal = async_sessionmaker(
     bind=engine,
     class_=AsyncSession,
@@ -30,7 +28,6 @@ SessionLocal = async_sessionmaker(
 )
 
 
-# Dependency для FastAPI
 async def get_db() -> AsyncGenerator[AsyncSession, None]:
     async with SessionLocal() as session:
         yield session
