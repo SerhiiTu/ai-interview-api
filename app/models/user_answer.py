@@ -11,6 +11,7 @@ class UserAnswer(Base):
     session_step_id: Mapped[int] = mapped_column(
         ForeignKey("session_steps.id", ondelete="CASCADE"),
         nullable=False,
+        unique=True,
         index=True,
     )
     type: Mapped[str | None] = mapped_column(String(45), nullable=True)

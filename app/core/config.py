@@ -3,9 +3,9 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     app_name: str = "AI Interview API"
-    database_url: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/ai_interview"
+    database_url: str
     ai_api_key: str | None = None
-    debug: bool = True
+    debug: bool = False
 
     model_config = SettingsConfigDict(
         env_file=".env",

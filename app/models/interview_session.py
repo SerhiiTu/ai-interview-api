@@ -13,6 +13,7 @@ class InterviewSession(Base):
     interview_id: Mapped[int] = mapped_column(
         ForeignKey("interviews.id", ondelete="CASCADE"),
         nullable=False,
+        unique=True,
         index=True,
     )
     main_ai_prompt: Mapped[str] = mapped_column(Text, nullable=False)

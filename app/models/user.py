@@ -16,6 +16,10 @@ class User(Base):
         unique=True,
         index=True,
     )
+    password_hash: Mapped[str] = mapped_column(
+        String(255),
+        nullable=False,
+    )
     role: Mapped[int] = mapped_column(Integer, nullable=False)
     first_name: Mapped[str] = mapped_column(String(255), nullable=False)
     last_name: Mapped[str] = mapped_column(String(255), nullable=False)
