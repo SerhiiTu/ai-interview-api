@@ -3,3 +3,8 @@ from .position import (
     PositionUpdate,
     PositionResponse,
 )
+from .specialization import (
+    SpecializationCreate,
+    SpecializationUpdate,
+    SpecializationResponse,
+)
