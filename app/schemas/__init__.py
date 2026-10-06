@@ -8,3 +8,8 @@ from .specialization import (
     SpecializationUpdate,
     SpecializationResponse,
 )
+from .user import (
+    UserCreate,
+    UserUpdate,
+    UserResponse,
+)
