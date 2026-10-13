@@ -1,7 +1,9 @@
 from fastapi import FastAPI
+
 from app.routers import health
 from app.routers import position
 from app.routers import specialization
+from app.routers import user
 
 app = FastAPI()
 
@@ -13,3 +15,4 @@ def root():
 app.include_router(health.router)
 app.include_router(position.router)
 app.include_router(specialization.router)
+app.include_router(user.router)
