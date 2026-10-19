@@ -3,6 +3,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.repositories import SpecializationRepository
 from app.schemas import SpecializationCreate, SpecializationUpdate
 
+from app.exceptions.specialization import SpecializationNotFoundError
+
 
 class SpecializationService:
     def __init__(self, db: AsyncSession):
@@ -12,32 +14,31 @@ class SpecializationService:
         return await self.repository.get_all()
 
     async def get_by_id(self, specialization_id: int):
-        return await self.repository.get_by_id(specialization_id)
+        specialization = await self.repository.get_by_id(specialization_id)
+
+        if specialization is None:
+            raise SpecializationNotFoundError("Specialization not found")
+
+        return specialization
 
     async def create(self, specialization_data: SpecializationCreate):
         return await self.repository.create(specialization_data)
 
-    async def update(
-        self,
-        specialization_id: int,
-        specialization_data: SpecializationUpdate,
-    ):
+    async def update(self, specialization_id: int, specialization_data: SpecializationUpdate):
         specialization = await self.repository.get_by_id(specialization_id)
 
         if specialization is None:
-            return None
+            raise SpecializationNotFoundError("Specialization not found")
 
         return await self.repository.update(
             specialization,
             specialization_data,
         )
 
-    async def delete(self, specialization_id: int) -> bool:
+    async def delete(self, specialization_id: int) -> None:
         specialization = await self.repository.get_by_id(specialization_id)
 
         if specialization is None:
-            return False
+            raise SpecializationNotFoundError("Specialization not found")
 
         await self.repository.delete(specialization)
-
-        return True

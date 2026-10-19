@@ -3,6 +3,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.repositories import PositionRepository
 from app.schemas import PositionCreate, PositionUpdate
 
+from app.exceptions.position import PositionNotFoundError
+
 
 class PositionService:
     def __init__(self, db: AsyncSession):
@@ -12,7 +14,12 @@ class PositionService:
         return await self.repository.get_all()
 
     async def get_by_id(self, position_id: int):
-        return await self.repository.get_by_id(position_id)
+        position = await self.repository.get_by_id(position_id)
+
+        if position is None:
+            raise PositionNotFoundError("Position not found")
+
+        return position
 
     async def create(self, position_data: PositionCreate):
         return await self.repository.create(position_data)
@@ -21,19 +28,17 @@ class PositionService:
         position = await self.repository.get_by_id(position_id)
 
         if position is None:
-            return None
+            raise PositionNotFoundError("Position not found")
 
         return await self.repository.update(
             position,
             position_data,
         )
 
-    async def delete(self, position_id: int) -> bool:
+    async def delete(self, position_id: int) -> None:
         position = await self.repository.get_by_id(position_id)
 
         if position is None:
-            return False
+            raise PositionNotFoundError("Position not found")
 
         await self.repository.delete(position)
-
-        return True
