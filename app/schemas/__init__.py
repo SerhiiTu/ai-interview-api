@@ -1,3 +1,8 @@
+from .interview import (
+    InterviewCreate,
+    InterviewUpdate,
+    InterviewResponse,
+)
 from .position import (
     PositionCreate,
     PositionUpdate,
