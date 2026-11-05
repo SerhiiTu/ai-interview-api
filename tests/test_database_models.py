@@ -4,8 +4,6 @@ from pathlib import Path
 
 from alembic.config import Config
 from alembic.script import ScriptDirectory
-from sqlalchemy import inspect
-from sqlalchemy.orm import DeclarativeBase
 
 import app.models as models_module
 from app.core.database import Base
