@@ -7,6 +7,7 @@ from app.exceptions.common import (
 )
 
 from app.routers import health
+from app.routers import interview
 from app.routers import position
 from app.routers import specialization
 from app.routers import user
@@ -32,6 +33,7 @@ def root():
     return {"message": "Hello World"}
 
 app.include_router(health.router)
+app.include_router(interview.router)
 app.include_router(position.router)
 app.include_router(specialization.router)
 app.include_router(user.router)
